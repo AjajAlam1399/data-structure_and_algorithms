@@ -31,6 +31,7 @@ void insertAtTail(node *&head, int val)
     }
     temp->next = n;
 }
+
 void DeleteNode_first(node* head){
     if(head==NULL){
         cout<<"nothing to delete as list is Empty !"<<endl;
@@ -40,24 +41,6 @@ void DeleteNode_first(node* head){
     head=head->next;
 
     delete todelete;
-}
-
-void DeleteNode_singlyList(node *&head, int val)
-{
-
-    if(head->data==val){
-        DeleteNode_first(head);
-    }
-
-    node *temp = head;
-
-    while (temp->next->data != val)
-    {
-        temp = temp->next;
-    }
-    node* nodeToDelete = temp->next;
-    temp->next = temp->next->next;
-    delete nodeToDelete;
 }
 
 void display(node *head)
