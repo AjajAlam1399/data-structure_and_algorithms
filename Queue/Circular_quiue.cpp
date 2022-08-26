@@ -89,9 +89,10 @@ public:
     }
     void printQueue()
     {
-        for (int i = 0; i <size; i++)
+        for (int i = 0; i < size; i++)
         {
-            if(arr[i]==-1){
+            if (arr[i] == -1)
+            {
                 continue;
             }
             cout << arr[i] << " ";
