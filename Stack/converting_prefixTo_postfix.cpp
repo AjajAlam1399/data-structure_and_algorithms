@@ -13,27 +13,27 @@ bool isOperator(char c)
     }
 }
 
-string postfixToprefix(string postfix)
+string prefixTopostfix(string prefix)
 {
 
     stack<string> s;
 
-    for (int i = 0; i < postfix.size(); i++)
+    for (int i = prefix.size()-1; i>=0; i--)
     {
-        if ((postfix[i] >= 'a' && postfix[i] <= 'z') || (postfix[i] >= 'A' && postfix[i] <= 'Z'))
+        if ((prefix[i] >= 'a' && prefix[i] <= 'z') || (prefix[i] >= 'A' && prefix[i] <= 'Z'))
         {
             string st;
-            st.push_back(postfix[i]);
+            st.push_back(prefix[i]);
             s.push(st);
             st.pop_back();
         }
-        if (isOperator(postfix[i]))
+        if (isOperator(prefix[i]))
         {
             string str1 = s.top();
             s.pop();
             string str2 = s.top();
             s.pop();
-            string exp = postfix[i] + str2+str1;
+            string exp = str1+str2+prefix[i];
             s.push(exp);
         }
     }
@@ -43,5 +43,5 @@ string postfixToprefix(string postfix)
 
 int main()
 {
-    cout<<postfixToprefix("ab+c-def^^*g/");
+   cout<<prefixTopostfix("+ab");
 }
