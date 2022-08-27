@@ -14,13 +14,13 @@ public:
     }
 };
 
-class Queue
+class CircularQueue
 {
     node *front;
     node *rare;
 
 public:
-    Queue()
+    CircularQueue()
     {
         front = rare = NULL;
     }
@@ -45,6 +45,8 @@ public:
         {
             rare->next = n;
             rare = n;
+
+            rare->next = front;
         }
     }
     void pop()
@@ -66,6 +68,7 @@ public:
             node *temp = front;
 
             front = front->next;
+            rare->next = front;
 
             node *todelete = temp;
 
@@ -107,11 +110,11 @@ public:
         {
             node *temp = front;
 
-            while (temp != NULL)
+            do
             {
                 count++;
                 temp = temp->next;
-            }
+            } while (temp != front);
         }
         return count;
     }
@@ -119,18 +122,16 @@ public:
     {
         node *temp = front;
 
-        while (temp != front)
+        do
         {
             cout << temp->data << " ";
             temp = temp->next;
-        }
+        } while (temp != front);
         cout << endl;
     }
 };
 
 int main()
 {
-    Queue q1;
-
     
 }
