@@ -65,6 +65,15 @@ public:
             delete todelete;
         }
     }
+    int topValue(){
+        if(isEmpty()){
+            cout<<"stack is underflowing !"<<endl;
+            return INT_MAX;
+        }
+        else{
+            return top->data;
+        }
+    }
     int size()
     {
         int count = 0;
