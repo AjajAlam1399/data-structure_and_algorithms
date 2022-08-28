@@ -51,6 +51,5 @@ int main(){
     string postfix;
     getline(cin,postfix);
     fflush(stdin);
-
     cout<<postfixToinfix(postfix);
 }
