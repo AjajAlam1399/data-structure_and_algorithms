@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+int globalspace = 5;
+
 class TreeNode
 {
 
@@ -83,38 +85,36 @@ public:
             }
         }
     }
-    void preOrderTraversal(TreeNode *r)
+    void print2D(TreeNode *r, int space)
     {
         if (r == NULL)
         {
             return;
         }
-        cout << r->data << " ";
-        preOrderTraversal(r->left);
-        preOrderTraversal(r->right);
-    }
-    void inorderTraversal(TreeNode *r)
-    {
-        if (r = NULL)
+        space += globalspace;
+        print2D(r->right, space);
+        cout << endl;
+        for (int i = globalspace; i < space; i++)
         {
-            return;
+            cout << " ";
         }
-        inorderTraversal(r->left);
-        cout << r->data << " ";
-        inorderTraversal(r->right);
-    }
-    void postorderTraversal(TreeNode *r)
-    {
-        if (r == NULL)
-        {
-            return;
-        }
-        postorderTraversal(r->right);
-        postorderTraversal(r->left);
-        cout << r->data << " ";
+        cout << r->data << endl;
+        print2D(r->left, space);
     }
 };
 
 int main()
 {
+    BST T1;
+
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        int num;
+        cin >> num;
+        TreeNode *n = new TreeNode(num);
+        T1.insertNode(n);
+    }
+    T1.print2D(T1.root, 5);
 }
