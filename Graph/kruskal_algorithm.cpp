@@ -6,12 +6,9 @@ bool cmp(tuple<int, int, int> t1, tuple<int, int, int> t2)
     return get<2>(t1) < get<2>(t2);
 }
 
-void Addedges(vector<vector<pair<int, int>>> &graph, vector<tuple<int, int, int>> &alledges, int tovertex, int fromvertex, int weight)
+void addEdges(vector<tuple<int, int, int>> &allEdges, int v1, int v2, int w)
 {
-    graph[tovertex].push_back(make_pair(fromvertex, weight));
-    graph[fromvertex].push_back(make_pair(tovertex, weight));
-    alledges.push_back(make_tuple(tovertex, fromvertex, weight));
-    cout << "Edges have been added !" << endl;
+    allEdges.emplace_back(make_tuple(v1, v2, w));
 }
 
 void make_set(vector<int> &parent)
@@ -22,54 +19,60 @@ void make_set(vector<int> &parent)
     }
 }
 
-int find_root(vector<int> &parent, int v)
+int find_parent(vector<int> &parent, int v)
 {
-    if (parent[v] != v)
+    if (v != parent[v])
     {
-        parent[v] = find_root(parent, parent[v]);
+        parent[v] = find_parent(parent, parent[v]);
     }
     return parent[v];
 }
 
 void union_set(vector<int> &parent, vector<int> &rank, int x, int y)
 {
-    int rootX = find_root(parent, x);
-    int rootY = find_root(parent, y);
-    if (rootX == rootY)
+    int rootx = find_parent(parent, x);
+    int rooty = find_parent(parent, y);
+    if (rootx == rooty)
     {
         return;
     }
-    if (rank[rootX] > rank[rootY])
+    if (rank[rootx] > rank[rooty])
     {
-        parent[rootY] = rootX;
+        parent[rooty] = rootx;
     }
     else
     {
-        parent[rootX] = rootY;
-        if (rank[rootX] == rank[rootY])
+        parent[rootx] = rooty;
+        if (rank[rootx] == rank[rooty])
         {
-            rank[rootY]++;
+            rank[rooty]++;
         }
     }
 }
 
-vector<tuple<int, int, int>> kruskalAlgoritm(vector<vector<pair<int, int>>> &graph, vector<tuple<int, int, int>> &alledges)
+vector<tuple<int, int, int>> Kruskal_algo(vector<tuple<int, int, int>> allEdges, int vertex)
 {
-    vector<int> parent(graph.size());
+    vector<int> parent(vertex);
     make_set(parent);
-    vector<int> rank(graph.size(), 0);
+    vector<int> rank(vertex, 0);
     vector<tuple<int, int, int>> result;
 
-    sort(alledges.begin(), alledges.end(), cmp);
-    for (tuple<int, int, int> t : alledges)
-    {
-        int rootX = find_root(parent, get<0>(t));
-        int rootY = find_root(parent, get<1>(t));
+    sort(allEdges.begin(), allEdges.end(), cmp);
 
-        if (rootX != rootY)
+    for (tuple<int, int, int> t1 : allEdges)
+    {
+        int v1 = get<0>(t1);
+        int v2 = get<1>(t1);
+        int w = get<2>(t1);
+
+        int rootx = find_parent(parent, v1);
+        int rooty = find_parent(parent, v2);
+
+        if (rootx != rooty)
         {
-            result.push_back(make_tuple(rootX, rootY, get<2>(t)));
-            union_set(parent, rank, rootX, rootY);
+
+            result.emplace_back(t1);
+            union_set(parent, rank, v1, v2);
         }
     }
     return result;
@@ -77,25 +80,23 @@ vector<tuple<int, int, int>> kruskalAlgoritm(vector<vector<pair<int, int>>> &gra
 
 int main()
 {
+
     int vertex, edges;
     cin >> vertex >> edges;
-    vector<vector<pair<int, int>>> graph(vertex);
 
-    vector<tuple<int, int, int>> alledges;
+    vector<tuple<int, int, int>> allEdges;
 
     for (int i = 0; i < edges; i++)
     {
-        int n1, n2, w;
-        cin >> n1 >> n2 >> w;
+        int v1, v2, w;
+        cin >> v1 >> v2 >> w;
+        addEdges(allEdges, v1, v2, w);
     }
 
-    vector<tuple<int, int, int>> result = kruskalAlgoritm(graph, alledges);
+    vector<tuple<int, int, int>> result = Kruskal_algo(allEdges, vertex);
 
-    cout << "minimum spaning tree : \n [vertex1,vertex2,weight]";
-
-    for (tuple<int, int, int> t : result)
+    for (tuple<int, int, int> t1 : result)
     {
-        cout << "-<" << get<0>(t) << "," << get<1>(t) << "," << get<2>(t) << ">";
+        cout << "<" << get<0>(t1) << "," << get<1>(t1) << "," << get<2>(t1) << ">  ";
     }
-    cout << endl;
 }
