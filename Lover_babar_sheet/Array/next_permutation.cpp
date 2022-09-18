@@ -32,3 +32,6 @@ public:
         for(auto i :nums) cout<<i<<" ";
     }
 };
+int main(){
+    
+}
