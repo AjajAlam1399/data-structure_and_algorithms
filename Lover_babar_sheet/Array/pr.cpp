@@ -1,43 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string isSubset(int a1[], int a2[], int n, int m)
-{
+int medium_of_two_sorted_array(int arr1[],int arr2[],int n,int m){
+    multiset<int>s(arr1,arr1+n);
+    s.insert(arr2,arr2+m);
 
-    unordered_map<int, int> m1;
-    unordered_map<int, int> m2;
+    vector<int>v(s.begin(),s.end());
 
-    for (int i = 0; i < n; i++)
-    {
-        m1[a1[i]]++;
-    }
-    for (int i = 0; i < m; i++)
-    {
-        m2[a2[i]]++;
-    }
+    int size=v.size();
 
-    bool flage = true;
-    for (auto it = m2.begin(); it != m2.end(); it++)
-    {
-        if (m1[it->first] < it->second)
-        {
-            flage = false;
-            break;
-        }
+    int index;
+
+    if(size%2!=0){
+        index=(size+1)/2;
+
+        return v[index-1];
     }
-    if (flage)
-    {
-        return "Yes";
-    }
-    else
-    {
-        return "No";
+    else{
+        index=size/2;
+
+        return floor((v[index]+v[index-1])/2);
     }
 }
-int main()
-{
-    int a1[] = {11, 1, 13, 21, 3, 7};
-    int a2[] = {11, 3, 7, 1};
+int main(){
+    int arr1[]={1,2};
+    int size1=sizeof(arr1)/sizeof(arr1[0]);
 
-    cout << isSubset(a1, a2, 6, 4);
+    int arr2[]={3,4};
+    int size2=sizeof(arr2)/sizeof(arr2[0]);
+
+    multiset<int>s(arr1,arr1+size1);
+    s.insert(arr2,arr2+size2);
+
+    vector<int>v(s.begin(),s.end());
+    for(auto i : v) cout<<i<<" ";
+
+    cout<<endl;
+    int index=v.size()/2;
+
+    cout<<index<<" "<<v[index-1]<<" "<<v[index];
+
+    cout<<endl;
+    // cout<<(2+3)/2;
+
+    float sum = (v[index-1]+v[index]);
+    float ans=sum/2;
+    cout<<ans;
 }
