@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+/*Complete the function below*/
+#include<bits/stdc++.h>
 using namespace std;
-
-int PalinArray(int a[], int n)
+class Solution {
+public:
+    int PalinArray(int a[], int n)
 {
     // code here
 
@@ -35,26 +37,4 @@ int PalinArray(int a[], int n)
     }
     return flage;
 }
-
-int main()
-{
-   int rev_no;
-
-    int digit;
-    int ten_pow;
-    int remainder;
-
-     rev_no = 0;
-        int k = 123456;
-        while (k >= 10)
-        {
-            digit = log10(k);
-            ten_pow = pow(10, digit);
-            remainder=k%10;
-
-            rev_no+=ten_pow*remainder;
-            k/=10;
-        }
-        rev_no+=k;
-    cout<<rev_no;
-}
+};
