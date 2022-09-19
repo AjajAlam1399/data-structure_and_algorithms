@@ -34,10 +34,10 @@ string isSubset(int a1[], int a2[], int n, int m)
         return "No";
     }
 }
-int main(){
-   int a1[] = {11, 1, 13, 21, 3, 7};
+int main()
+{
+    int a1[] = {11, 1, 13, 21, 3, 7};
     int a2[] = {11, 3, 7, 1};
 
-    cout<<isSubset(a1,a2,6,4);
-
+    cout << isSubset(a1, a2, 6, 4);
 }
