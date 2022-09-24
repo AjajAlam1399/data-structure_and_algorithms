@@ -1,7 +1,8 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-
-void setZeroes(vector<vector<int>> &matrix)
+class Solution {
+public:
+    void setZeroes(vector<vector<int>> &matrix)
 {
 
     vector<pair<int, int>> box;
@@ -33,3 +34,4 @@ void setZeroes(vector<vector<int>> &matrix)
         }
     }
 }
+};
