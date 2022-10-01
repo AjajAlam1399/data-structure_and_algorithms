@@ -1,32 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void rotate(vector<vector<int>> &matrix)
-{
-    vector<vector<int>> matrixNew(matrix.size());
-
-    vector<int> v;
-    int size = matrixNew.size() - 1;
-
-    for (int i = 0; i < matrix.size(); i++)
-    {
-        for (int j = 0; j < matrix[i].size(); j++)
-        {
-            v.push_back(matrix[i][j]);
+long long maxSubarraySum(int arr[], int n){
+        
+        long long sum=0;
+        long long result=INT_MIN;
+        
+        for(int i=0;i<n;i++){
+            sum+=arr[i];
+            if(result<sum){
+                result=sum;
+            }
+            if(sum<0){
+                sum=0;
+            }
         }
-
-        for (int i = 0; i < matrix.size(); i++)
-        {
-            matrixNew[i][size] = v[i];
-        }
-        size--;
-        v.clear();
+        
+        return result;
+        
     }
-    for (int i = 0; i < matrix.size(); i++)
-    {
-        for (int j = 0; j < matrix[i].size(); j++)
-        {
-            matrix[i][j] = matrixNew[i][j];
-        }
-    }
-}
