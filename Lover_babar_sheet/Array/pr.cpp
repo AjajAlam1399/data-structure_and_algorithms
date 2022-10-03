@@ -33,3 +33,6 @@ void setZeroes(vector<vector<int>> &matrix)
         }
     }
 }
+int main(){
+    cout<<"hello";
+}
