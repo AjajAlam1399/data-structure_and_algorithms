@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define l long long 
 
 int getbit(int num,int pos){
     return ((num)&(1<<pos))!=0;
