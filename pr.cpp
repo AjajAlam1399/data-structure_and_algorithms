@@ -1,55 +1,91 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-class Hashmap
+#define Globalspace 5
+class Node
 {
-    vector<list<pair<int, int>>> map;
-    int size = 50;
 public:
-    Hashmap()
+    Node *left;
+    Node *right;
+    int data;
+    Node(int data)
     {
-        map.resize(size); // intializing all element with 0
-    }
-    int Hashing(int key)
-    {
-        return key % size;
-    }
-    list<pair<int,int>>::iterator search(int key){
-        int i=Hashing(key);
-        for(auto it=map[i].begin();it!=map[i].end();it++){
-            if(it->first==key){
-                return it;
-            }
-        }
-        return map[i].end();
-    }
-    void put(int key, int value)
-    {
-        int i=Hashing(key);
-        auto it=search(key);
-        if(it!=map[i].end()){
-            it->second=value;
-            return;
-        }
-        map[i].push_back(make_pair(key,value));
-
-    }
-    int get(int key)
-    {
-        int i=Hashing(key);
-        auto it=search(key);
-        if(it!=map[i].end()){
-            return it->second;
-        }
-        return -1;
-    }
-    void remove(int key)
-    {
-        int i=Hashing(key);
-        auto it=search(key);
-        if(it==map[i].end()){
-            return ;
-        }
-        map[i].erase(it);
+        left = right = NULL;
+        this->data = data;
     }
 };
+
+class BST
+{
+
+public:
+    Node *root;
+    BST()
+    {
+        root = NULL;
+    }
+    void insertion(Node *newnode)
+    {
+        if (root == NULL)
+        {
+            root = newnode;
+            return;
+        }
+        Node *temp = root;
+        while (temp != NULL)
+        {
+            if (temp->data == newnode->data)
+            {
+                cout << "Duplicate is not allowed !" << endl;
+                return;
+            }
+            else if (newnode->data < temp->data && temp->left == NULL)
+            {
+                temp->left = newnode;
+                break;
+            }
+            else if (newnode->data < temp->data)
+            {
+                temp = temp->left;
+            }
+            else if (newnode->data > temp->data && temp->right == NULL)
+            {
+                temp->right = newnode;
+                break;
+            }
+            else
+            {
+                temp = temp->right;
+            }
+        }
+    }
+    void print2D(Node *root, int space)
+    {
+        if (root == NULL)
+        {
+            return;
+        }
+        space = space + Globalspace;
+        print2D(root->right, space);
+        cout << endl;
+        for (int i = Globalspace; i < space; i++)
+        {
+            cout << " ";
+        }
+        cout << root->data << endl;
+        print2D(root->left, space);
+    }
+};
+
+int main(){
+
+    BST t;
+    int n;
+    cin>>n;
+    int data;
+    for(int i=0;i<n;i++){
+        cin>>data;
+        Node* newnode=new Node(data);
+        t.insertion(newnode);
+    }
+    t.print2D(t.root,10);
+}
