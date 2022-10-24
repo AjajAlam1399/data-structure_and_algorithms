@@ -61,27 +61,32 @@ public:
         display(root->left, space);
     }
 
-    vector<int> preorder(node *root)
+    vector<int> inorder(node *root)
     {
         vector<int> result;
         if (root == NULL)
         {
             return result;
         }
-        stack<node *> s;
-        s.push(root);
-        while (!s.empty())
+        stack<node *> st;
+
+        node *temp = root;
+
+        while (true)
         {
-            root = s.top();
-            s.pop();
-            result.push_back(root->data);
-            if (root->right != NULL)
+            if (temp != NULL)
             {
-                s.push(root->right);
+                st.push(temp);
+                temp = temp->left;
             }
-            if (root->left != NULL)
+            else
             {
-                s.push(root->left);
+                if (st.empty())
+                    break;
+                temp=st.top();
+                result.push_back(temp->data);
+                st.pop();
+                temp = temp->right;
             }
         }
         return result;
@@ -103,8 +108,8 @@ int main()
         node *newnode = new node(num);
         t.root = t.insert_recursively(t.root, newnode);
     }
-    vector<int> preorder = t.preorder(t.root);
+    vector<int> inorder = t.inorder(t.root);
 
-    for (auto i : preorder)
-        cout << i << " ";
+    for (auto it : inorder)
+        cout << it << " ";
 }
