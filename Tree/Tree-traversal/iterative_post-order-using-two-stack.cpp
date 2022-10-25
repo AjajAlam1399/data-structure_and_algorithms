@@ -109,5 +109,6 @@ int main()
     }
     vector<int> postorder = t.postorder(t.root);
 
-    for(auto i : postorder)cout<<i<<" ";
+    for (auto i : postorder)
+        cout << i << " ";
 }
