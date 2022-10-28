@@ -5,99 +5,122 @@ class node
 {
 public:
     int data;
-    node *next;
+    node *left;
+    node *right;
     node(int data)
     {
         this->data = data;
-        next = NULL;
+        left = right = NULL;
     }
 };
-class Stack
+
+int globalspace = 10;
+
+class BST
 {
-    node *top;
-
 public:
-    Stack()
+    node *root;
+    BST()
     {
-        top = NULL;
+        root = NULL;
     }
-    bool isEmpty()
+
+    void insert(node *&root, node *newnode)
     {
-        if (top == NULL)
+        if (root == NULL)
         {
-            return true;
-        }
-        return false;
-    }
-    void push(int val)
-    {
-        node *n = new node(val);
-        if (isEmpty())
-        {
-            top = n;
+            root = newnode;
+            cout << "inert at root" << endl;
             return;
         }
-        else
-        {
-            node *temp = top;
-            top = n;
-            n->next = temp;
-        }
-    }
-    void pop()
-    {
-        if (isEmpty())
-        {
-            cout << "Stack is Empty !" << endl;
-            return;
-        }
-        node *temp = top;
-        top = top->next;
-        delete temp;
-        return;
-    }
-    int Top()
-    {
-        if (isEmpty())
-        {
-            cout << "Stack is Empty !" << endl;
-            return -1;
-        }
-        return top->data;
-    }
-    int size()
-    {
-        node *temp = top;
-        int count = 0;
+        node *temp = root;
         while (temp != NULL)
         {
-            temp = temp->next;
-            count++;
+            if (temp->data == newnode->data)
+            {
+                cout << "duplicate is not allowed" << endl;
+                return;
+            }
+            else if (temp->data > newnode->data && temp->left == NULL)
+            {
+                temp->left = newnode;
+                cout << "insert at left" << endl;
+                return;
+            }
+            else if (temp->data > newnode->data)
+            {
+                temp = temp->left;
+            }
+            else if (temp->data < newnode->data && temp->right == NULL)
+            {
+                temp->right = newnode;
+                cout << "insert at the right" << endl;
+                return;
+            }
+            else
+            {
+                temp = temp->right;
+            }
         }
-        return count;
     }
-    void display()
+    void display(node *root, int space)
     {
-        if (isEmpty())
+        if (root == NULL)
         {
-            cout << "Stack is Empty !" << endl;
             return;
         }
-        node *temp = top;
-        while (temp != NULL)
+        space = space + globalspace;
+        display(root->right, space);
+        for (int i = globalspace; i < space; i++)
         {
-            cout << temp->data << endl;
-            temp = temp->next;
+            cout << " ";
         }
+        cout << root->data << endl;
+        display(root->left, space);
+    }
+
+    vector<int> postorder(node *root)
+    {
+        vector<int> result;
+        if (!root)
+        {
+            return result;
+        }
+        stack<node *> st1, st2;
+        st1.push(root);
+        while (!st1.empty())
+        {
+            root = st1.top();
+            st1.pop();
+            st2.push(root);
+            if(root->left){
+                st1.push(root->left);
+            }
+            if(root->right){
+                st1.push(root->right);
+            }
+        }
+        while(!st2.empty()){
+            result.push_back(st2.top()->data);
+            st2.pop();
+        }
+        return result;
     }
 };
-
 int main()
 {
-    Stack st;
-    // st.push(1);
-    // st.push(2);
-    // st.push(3);
-    // st.display();
-    cout<<st.size();
+    BST t;
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        int num;
+        cin >> num;
+        node *newnode = new node(num);
+        t.insert(t.root, newnode);
+    }
+    // t.display(t.root, 5);
+    vector<int> preoreder = t.postorder(t.root);
+    for (auto i : preoreder)
+        cout << i << " ";
 }
