@@ -1,126 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class node
+void addVertex(vector<vector<int>> &graph, int tovertex, int fromvertex)
 {
-public:
-    int data;
-    node *left;
-    node *right;
-    node(int data)
-    {
-        this->data = data;
-        left = right = NULL;
-    }
-};
+    graph[tovertex].push_back(fromvertex);
+    graph[fromvertex].push_back(tovertex);
+}
 
-int globalspace = 10;
-
-class BST
+vector<int> BFS(vector<vector<int>> graph, int start)
 {
-public:
-    node *root;
-    BST()
+    vector<int> result;
+    vector<bool> visted(graph.size(), false);
+    queue<int> q;
+    q.push(start);
+    visted[start] = true;
+    while (!q.empty())
     {
-        root = NULL;
+        int v = q.front();
+        q.pop();
+        result.push_back(v);
+        for (auto it = graph[v].begin(); it != graph[v].end(); it++)
+        {
+            if (!visted[*it])
+            {
+                q.push(*it);
+                visted[*it] = true;
+            }
+        }
     }
+    return result;
+}
+void display(vector<vector<int>> graph)
+{
+    for (int i = 0; i < graph.size(); i++)
+    {
+        cout << i;
+        for (auto j = graph[i].begin(); j < graph[i].end(); j++)
+        {
+            cout << "->" << *j;
+        }
+        cout << endl;
+    }
+}
 
-    void insert(node *&root, node *newnode)
-    {
-        if (root == NULL)
-        {
-            root = newnode;
-            cout << "inert at root" << endl;
-            return;
-        }
-        node *temp = root;
-        while (temp != NULL)
-        {
-            if (temp->data == newnode->data)
-            {
-                cout << "duplicate is not allowed" << endl;
-                return;
-            }
-            else if (temp->data > newnode->data && temp->left == NULL)
-            {
-                temp->left = newnode;
-                cout << "insert at left" << endl;
-                return;
-            }
-            else if (temp->data > newnode->data)
-            {
-                temp = temp->left;
-            }
-            else if (temp->data < newnode->data && temp->right == NULL)
-            {
-                temp->right = newnode;
-                cout << "insert at the right" << endl;
-                return;
-            }
-            else
-            {
-                temp = temp->right;
-            }
-        }
-    }
-    void display(node *root, int space)
-    {
-        if (root == NULL)
-        {
-            return;
-        }
-        space = space + globalspace;
-        display(root->right, space);
-        for (int i = globalspace; i < space; i++)
-        {
-            cout << " ";
-        }
-        cout << root->data << endl;
-        display(root->left, space);
-    }
-
-    vector<int> postorder(node *root)
-    {
-        vector<int> result;
-        if (!root)
-        {
-            return result;
-        }
-        stack<node *> st1, st2;
-        st1.push(root);
-        while (!st1.empty())
-        {
-            root = st1.top();
-            st1.pop();
-            st2.push(root);
-            if(root->left){
-                st1.push(root->left);
-            }
-            if(root->right){
-                st1.push(root->right);
-            }
-        }
-        while(!st2.empty()){
-            result.push_back(st2.top()->data);
-            st2.pop();
-        }
-        return result;
-    }
-};
 int main()
 {
-    BST t;
-    int n;
-    cin >> n;
-    for (int i = 1; i <= n; i++)
+    int vertex;
+    cin >> vertex;
+    vector<vector<int>> graph(vertex);
+    int edges;
+    cin >> edges;
+
+    for (int i = 1; i <= edges; i++)
     {
-        int num;
-        cin >> num;
-        node *newnode = new node(num);
-        t.insert(t.root, newnode);
+        int v1, v2;
+        cin >> v1 >> v2;
+        addVertex(graph, v1, v2);
     }
-    // t.display(t.root, 5);
-    vector<int> preoreder = t.postorder(t.root);
-    for (auto i : preoreder)
+    display(graph);
+
+    vector<int> result = BFS(graph, 0);
+
+    for (auto i : result)
         cout << i << " ";
 }
