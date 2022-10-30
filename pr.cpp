@@ -1,66 +1,83 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void addVertex(vector<vector<int>> &graph, int tovertex, int fromvertex)
+class node
 {
-    graph[tovertex].push_back(fromvertex);
-    graph[fromvertex].push_back(tovertex);
+public:
+    int data;
+    node *next;
+    node(int data)
+    {
+        this->data = data;
+        next = NULL;
+    }
+};
+
+void insert(node *&head, int val)
+{
+    node *n = new node(val);
+    if (head == NULL)
+    {
+        head = n;
+        return;
+    }
+    node *temp = head;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    temp->next = n;
 }
 
-vector<int> BFS(vector<vector<int>> graph, int start)
+void display(node *head)
 {
-    vector<int> result;
-    vector<bool> visted(graph.size(), false);
-    queue<int> q;
-    q.push(start);
-    visted[start] = true;
-    while (!q.empty())
+    node *temp = head;
+    while (temp != NULL)
     {
-        int v = q.front();
-        q.pop();
-        result.push_back(v);
-        for (auto it = graph[v].begin(); it != graph[v].end(); it++)
-        {
-            if (!visted[*it])
-            {
-                q.push(*it);
-                visted[*it] = true;
-            }
-        }
+        cout << temp->data << "->";
+        temp = temp->next;
     }
-    return result;
+    cout << "NULL";
 }
-void display(vector<vector<int>> graph)
+
+node *reverse(node *&head)
 {
-    for (int i = 0; i < graph.size(); i++)
+    node *curr = head;
+    node *prev = NULL;
+    node *nextptr;
+
+    while (curr != NULL)
     {
-        cout << i;
-        for (auto j = graph[i].begin(); j < graph[i].end(); j++)
-        {
-            cout << "->" << *j;
-        }
-        cout << endl;
+        nextptr = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextptr;
     }
+    return prev;
+}
+
+node *rev(node *head)
+{
+    if (head == NULL || head->next == NULL)
+    {
+        return head;
+    }
+    node *newhead = rev(head->next);
+    head->next->next = head;
+    head->next = NULL;
+    return newhead;
 }
 
 int main()
 {
-    int vertex;
-    cin >> vertex;
-    vector<vector<int>> graph(vertex);
-    int edges;
-    cin >> edges;
+    node *head = NULL;
+    insert(head, 1);
+    insert(head, 2);
+    insert(head, 3);
+    insert(head, 4);
 
-    for (int i = 1; i <= edges; i++)
-    {
-        int v1, v2;
-        cin >> v1 >> v2;
-        addVertex(graph, v1, v2);
-    }
-    display(graph);
-
-    vector<int> result = BFS(graph, 0);
-
-    for (auto i : result)
-        cout << i << " ";
+    display(head);
+    cout << endl;
+    node *newhead = rev(head);
+    display(newhead);
 }
