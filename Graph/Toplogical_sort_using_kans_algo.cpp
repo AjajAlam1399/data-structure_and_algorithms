@@ -43,7 +43,7 @@ vector<int> toplogicalSort(vector<vector<int>> graph)
         if (indegree[i] == 0)
         {
             q.push(i);
-            break;
+            
         }
     }
     while (!q.empty())
