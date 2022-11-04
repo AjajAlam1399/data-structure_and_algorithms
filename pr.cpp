@@ -67,17 +67,10 @@ node *rev(node *head)
     head->next = NULL;
     return newhead;
 }
-
+void size(char* c){
+    cout<<sizeof(c)/sizeof(c[0]);
+}
 int main()
 {
-    node *head = NULL;
-    insert(head, 1);
-    insert(head, 2);
-    insert(head, 3);
-    insert(head, 4);
-
-    display(head);
-    cout << endl;
-    node *newhead = rev(head);
-    display(newhead);
+    
 }
