@@ -18,7 +18,7 @@ int total_energy(int n,vector<int>heights,vector<int>&dp){
 }
 int frogJump(int n, vector<int> &heights)
 {
-    // Write your code here.
+    
     vector<int>dp(n+1,-1);
     return total_energy(n-1,heights,dp);
 }
