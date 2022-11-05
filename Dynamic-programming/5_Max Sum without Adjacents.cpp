@@ -30,9 +30,9 @@ public:
 // tabulation method 
 
 int findMaxSum(int *arr, int n) {
-	    // code here
+	    
 	    vector<int>dp(n+1,-1);
-	   // return max_sum(arr,n-1,dp);
+	  
 	    dp[0]=arr[0];
 	    dp[1]=max(arr[0],arr[1]);
 	    for(int i=2;i<n;i++){
