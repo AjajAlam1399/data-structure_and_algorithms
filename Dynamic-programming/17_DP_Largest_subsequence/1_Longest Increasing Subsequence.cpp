@@ -64,4 +64,6 @@ int longestIncreasingSubsequence(int arr[], int n)
     }
     
     return curr[-1+1]; 
+
+    // end of space optimization
 }
