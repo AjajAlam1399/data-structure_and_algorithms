@@ -37,37 +37,20 @@ struct Node
    
 class Solution
 {
+    bool fun(Node* r1,Node* r2){
+        if(r1==NULL || r2==NULL){
+            return r1==r2;
+        }
+        
+        return (r1->data==r2->data) && fun(r1->left,r2->left) && fun(r1->right,r2->right);
+    }
     public:
     //Function to check if two trees are identical.
-    vector<int> pre_order(Node* r){
-        vector<int>result;
-        if(r==NULL){
-            return result;
-        }
-        queue<Node*>q;
-        q.push(r);
-        while(!q.empty()){
-            r=q.front();
-            q.pop();
-            result.push_back(r->data);
-            if(r->left!=NULL){
-                q.push(r->left);
-            }
-            if(r->right!=NULL){
-                q.push(r->right);
-            }
-        }
-        return result;
-    }
     bool isIdentical(Node *r1, Node *r2)
     {
         //Your Code here
-        vector<int>t1=pre_order(r1);
-        vector<int>t2=pre_order(r2);
-        if(t1==t2){
-            return true;
-        }
-        return false;
+        
+        return fun(r1,r2);
     }
 };
 
