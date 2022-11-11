@@ -1,76 +1,108 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-class node
-{
-public:
-    int data;
-    node *next;
-    node(int data)
-    {
-        this->data = data;
-        next = NULL;
+class TrieNode{
+    public:
+    char data;
+    TrieNode* childern[26];
+    bool isterminal;
+
+    TrieNode(char data){
+        this->data=data;
+        for(int i=0;i<26;i++){
+            childern[i]=NULL;
+        }
+        isterminal=false;
     }
 };
 
-void insert(node *&head, int val)
-{
-    node *n = new node(val);
-    if (head == NULL)
-    {
-        head = n;
-        return;
+class trie{
+    TrieNode* root;
+
+    //inserting
+    void insertUtil(TrieNode* r,string str){
+
+        // base case
+
+        if(str.size()==0){
+            r->isterminal=true;
+            return ;
+        }
+
+        TrieNode* child;
+
+        int index=str[0]-'A';   // assuming inseted letter in uppercase
+
+        if(r->childern[index]!=NULL){
+            child=r->childern[index];
+        }
+        else{
+            child=new TrieNode(str[0]);
+            r->childern[index]=child;
+        }
+        insertUtil(child,str.substr(1));
     }
-    node *temp = head;
-    while (temp->next != NULL)
-    {
-        temp = temp->next;
+    bool searchUtil(TrieNode* r,string str){
+
+        if(str.size()==0){
+            return r->isterminal;
+        }
+
+        int index=str[0]-'A';
+        TrieNode* child;
+        if(r->childern[index]!=NULL){
+            child=r->childern[index];
+        }
+        else{
+            return false;
+        }
+        return searchUtil(child,str.substr(1));
     }
-    temp->next = n;
+    TrieNode* removeUtil(TrieNode* r,string str){
+        if(str.size()==0){
+            r->isterminal=false;
+            return NULL;
+        }
+
+        int index=str[0]-'A';
+        TrieNode* child;
+        if(r->childern[index]!=NULL){
+            child=r->childern[index];
+        }
+        return removeUtil(child,str.substr(1));
+    }
+    public:
+
+    trie(){
+        root=new TrieNode('\0');
+    }
+
+    void insert(string str){
+        insertUtil(root,str);
+    }
+
+    bool search(string str){
+
+        return searchUtil(root,str);
+    }
+
+    void remove(string str){
+        removeUtil(root,str);
+    }
+};
+
+int main(){
+    trie t;
+
+    t.insert("AJAJ");
+
+    cout<<t.search("AJAJ");
+    t.remove("AJAJ");
+    cout<<endl;
+    cout<<t.search("AJAJ");
+
+
+    t.insert("CAR");
+    cout<<endl<<t.search("CAR");
 }
 
-void display(node *head)
-{
-    node *temp = head;
-    while (temp != NULL)
-    {
-        cout << temp->data << "->";
-        temp = temp->next;
-    }
-    cout << "NULL";
-}
-
-node *reverse(node *&head)
-{
-    node *curr = head;
-    node *prev = NULL;
-    node *nextptr;
-
-    while (curr != NULL)
-    {
-        nextptr = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = nextptr;
-    }
-    return prev;
-}
-
-node *rev(node *head)
-{
-    if (head == NULL || head->next == NULL)
-    {
-        return head;
-    }
-    node *newhead = rev(head->next);
-    head->next->next = head;
-    head->next = NULL;
-    return newhead;
-}
-void size(char* c){
-    cout<<sizeof(c)/sizeof(c[0]);
-}
-int main()
-{
-    
-}
