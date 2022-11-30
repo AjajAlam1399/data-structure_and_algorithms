@@ -94,15 +94,19 @@ class trie{
 int main(){
     trie t;
 
-    t.insert("AJAJ");
+    // t.insert("AJAJ");
 
-    cout<<t.search("AJAJ");
-    t.remove("AJAJ");
-    cout<<endl;
-    cout<<t.search("AJAJ");
+    // cout<<t.search("AJAJ");
+    // t.remove("AJAJ");
+    // cout<<endl;
+    // cout<<t.search("AJAJ");
 
 
-    t.insert("CAR");
-    cout<<endl<<t.search("CAR");
+    // t.insert("CAR");
+    
+
+    int arr[3]={1,2,3};
+    auto it=lower_bound(arr,arr+3,0);
+    cout<<it-arr;
 }
 
