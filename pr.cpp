@@ -1,112 +1,22 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-class TrieNode{
-    public:
-    char data;
-    TrieNode* childern[26];
-    bool isterminal;
 
-    TrieNode(char data){
-        this->data=data;
-        for(int i=0;i<26;i++){
-            childern[i]=NULL;
-        }
-        isterminal=false;
-    }
-};
 
-class trie{
-    TrieNode* root;
+void fun(int arr[],int l,int r){
 
-    //inserting
-    void insertUtil(TrieNode* r,string str){
-
-        // base case
-
-        if(str.size()==0){
-            r->isterminal=true;
-            return ;
-        }
-
-        TrieNode* child;
-
-        int index=str[0]-'A';   // assuming inseted letter in uppercase
-
-        if(r->childern[index]!=NULL){
-            child=r->childern[index];
-        }
-        else{
-            child=new TrieNode(str[0]);
-            r->childern[index]=child;
-        }
-        insertUtil(child,str.substr(1));
-    }
-    bool searchUtil(TrieNode* r,string str){
-
-        if(str.size()==0){
-            return r->isterminal;
-        }
-
-        int index=str[0]-'A';
-        TrieNode* child;
-        if(r->childern[index]!=NULL){
-            child=r->childern[index];
-        }
-        else{
-            return false;
-        }
-        return searchUtil(child,str.substr(1));
-    }
-    TrieNode* removeUtil(TrieNode* r,string str){
-        if(str.size()==0){
-            r->isterminal=false;
-            return NULL;
-        }
-
-        int index=str[0]-'A';
-        TrieNode* child;
-        if(r->childern[index]!=NULL){
-            child=r->childern[index];
-        }
-        return removeUtil(child,str.substr(1));
-    }
-    public:
-
-    trie(){
-        root=new TrieNode('\0');
+    if(l>=r){
+        return;
     }
 
-    void insert(string str){
-        insertUtil(root,str);
-    }
-
-    bool search(string str){
-
-        return searchUtil(root,str);
-    }
-
-    void remove(string str){
-        removeUtil(root,str);
-    }
-};
-
-int main(){
-    trie t;
-
-    // t.insert("AJAJ");
-
-    // cout<<t.search("AJAJ");
-    // t.remove("AJAJ");
-   
-    
-
-
-    
-    
-
-    int arr[3]={1,2,3};
-    auto it=lower_bound(arr,arr+3,0);
-    cout<<it-arr;
+    swap(arr[l],arr[r]);
+    fun(arr,l+1,r-1);
 }
 
+int main()
+{
+    int arr[]={1,2,3,4,5};
+    fun(arr,0,sizeof(arr)/sizeof(arr[0])-1);
+
+    for(auto i:arr)cout<<i<<" ";
+}
