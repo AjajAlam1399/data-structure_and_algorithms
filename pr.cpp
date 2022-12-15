@@ -1,22 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
-
-void fun(int arr[],int l,int r){
-
-    if(l>=r){
-        return;
-    }
-
-    swap(arr[l],arr[r]);
-    fun(arr,l+1,r-1);
-}
-
-int main()
+int ninjaTraining(int n, vector<vector<int>> &points)
 {
-    int arr[]={1,2,3,4,5};
-    fun(arr,0,sizeof(arr)/sizeof(arr[0])-1);
+    // Write your code here.
+    vector<vector<int>> dp(n, vector<int>(4, -1));
+    //     return fun(points,n-1,3,dp);
 
-    for(auto i:arr)cout<<i<<" ";
+    for (int day = 0; day < n; day++)
+    {
+        for (int prev = 0; prev <= 3; prev++)
+        {
+            if (day == 0)
+            {
+                int max_val = -1e7;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i != prev)
+                    {
+                        max_val = max(max_val, points[0][i]);
+                    }
+                }
+                return max_val;
+            }
+            else
+            {
+                int val = -1e7;
+                for (int curr = 2; curr >= 0; curr--)
+                {
+                    if (curr != prev)
+                    {
+                        int p = points[day][curr] + dp[day - 1][curr];
+                        val = max(val, p);
+                    }
+                }
+                dp[day][prev] = val;
+            }
+        }
+    }
+    
 }
