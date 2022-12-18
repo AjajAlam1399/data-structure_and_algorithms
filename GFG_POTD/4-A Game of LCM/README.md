@@ -19,13 +19,18 @@ to 4.
 Example 2:
 
 Input:
+
 N = 5
+
 Output: 60
+
 Explanation:
 The four numbers can be [5,5,4,3] or
 [5,4,3,2], etc. 60 is the maximum that can
 be obtained.
+
 Your Task:
+
 You don't need to read input or print anything. Your task is to complete the function maxGcd() which takes N as the input parameter and returns the maximum LCM that can be obtained from four numbers less than or equal to N.
 
 Expected Time Complexity: O( Log2(max(N)) )
