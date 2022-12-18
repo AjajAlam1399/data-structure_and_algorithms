@@ -9,39 +9,49 @@ using namespace std;
 
 class Solution {
   public:
-  void fun(int n,int m,vector<vector<int>>& grid, vector<vector<bool>>&visted,
-   vector<pair<int,int>>&vec,int row0,int col0){
-       visted[n][m]=true;
-       vec.push_back(make_pair(n-row0,m-col0));
-        int row=grid.size();
-        int col=grid[0].size();
-        int arr1[]={-1,0,1,0};
-        int arr2[]={0,1,0,-1};
-        for(int i=0;i<4;i++){
-            int nrow=n+arr1[i];
-            int ncol=m+arr2[i];
-            if(nrow>=0 && ncol>=0 && nrow<row && ncol<col &&
-            visted[nrow][ncol]==false && grid[nrow][ncol]==1){
-                fun(nrow,ncol,grid,visted,vec,row0,col0);
-            }
-        }
-   }
+  
+  void dfs(vector<vector<int>>& grid,int row,int col ,vector<vector<bool>>&visted,
+  int row0,int col0,vector<pair<int,int>>&subans){
+      visted[row][col]=true;
+      
+      subans.push_back({row-row0,col-col0});
+      
+      int arr1[]={1,0,0,-1};
+      int arr2[]={0,-1,1,0};
+      
+      for(int i=0;i<=3;i++){
+          int nrow=row+arr1[i];
+          int ncol=col+arr2[i];
+          
+          if(nrow>=0 && nrow<grid.size() && ncol>=0 && ncol<grid[0].size()
+          && grid[nrow][ncol]==1 && !visted[nrow][ncol]){
+              dfs(grid,nrow,ncol,visted,row0,col0,subans);
+          }
+      }
+  }
+  
     int countDistinctIslands(vector<vector<int>>& grid) {
         // code here
+        
         int row=grid.size();
         int col=grid[0].size();
+        
+        vector<vector<bool>>visted(row,vector<bool>(col,false));
+        
         set<vector<pair<int,int>>>ans;
-        vector<vector<bool>>visted(row,vector<bool>(row,false));
+        
+       
+        
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){
-                if(grid[i][j]==1 && visted[i][j]==false){
-                    vector<pair<int,int>>vec;
-                    fun(i,j,grid,visted,vec,i,j);
-                    ans.insert(vec);
-                    
+                if(grid[i][j]==1 && !visted[i][j]){
+                     vector<pair<int,int>>subans;
+                    dfs(grid,i,j,visted,i,j,subans);
+                    ans.insert(subans);
                 }
             }
         }
+        
         return ans.size();
     }
 };
