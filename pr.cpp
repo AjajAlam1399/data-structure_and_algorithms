@@ -40,3 +40,10 @@ int ninjaTraining(int n, vector<vector<int>> &points)
     }
 }
 
+int main()
+{
+    multiset<int>st;
+    st.insert(1);
+    auto it=st.lower_bound(6);
+    cout<<distance(st.begin(),it);
+}
