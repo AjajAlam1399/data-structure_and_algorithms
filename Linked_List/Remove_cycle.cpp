@@ -1,128 +1,161 @@
-#include <bits/stdc++.h>
+//{ Driver Code Starts
+// driver code
+
+#include <iostream>
 using namespace std;
 
-class node
+struct Node
 {
-public:
     int data;
-    node *next;
-
-    node(int data)
+    Node* next;
+    
+    Node(int val)
     {
-        this->data = data;
+        data = val;
         next = NULL;
     }
 };
 
-void appendNode(node *&head, int data)
+void loopHere(Node* head, Node* tail, int position)
 {
-    node *n = new node(data);
-
-    if (head == NULL)
-    {
-        head = n;
-        return;
-    }
-
-    node *temp = head;
-
-    while (temp->next != NULL)
-    {
-        temp = temp->next;
-    }
-    temp->next = n;
+    if(position==0) return;
+    
+    Node* walk = head;
+    for(int i=1; i<position; i++)
+        walk = walk->next;
+    tail->next = walk;
 }
 
-void make_Cycle(node *head, int pos)
+bool isLoop(Node* head)
 {
-    node *temp = head;
-    node *joinNode;
-
-    int count = 1;
-
-    while (temp->next != NULL)
+    if(!head) return false;
+    
+    Node* fast = head->next;
+    Node* slow = head;
+    
+    while( fast != slow)
     {
-        if (count == pos)
-        {
-            joinNode = temp;
+        if( !fast || !fast->next ) return false;
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    
+    return true;
+}
+
+int length(Node* head)
+{
+    int ret = 0;
+    while(head)
+    {
+        ret++;
+        head = head->next;
+    }
+    return ret;
+}
+
+
+// } Driver Code Ends
+/*
+structure of linked list node:
+
+struct Node
+{
+    int data;
+    Node* next;
+    
+    Node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+};
+
+*/
+
+class Solution
+{
+    public:
+    //Function to remove a loop in the linked list.
+    void fun(Node* head){
+        Node* ptr1=head;
+        Node* ptr2=head;
+        
+        bool flag=false;
+        
+        while(ptr2!=NULL && ptr2->next!=NULL){
+            ptr1=ptr1->next;
+            ptr2=ptr2->next->next;
+            
+            if(ptr1==ptr2){
+                flag=true;
+                break;
+            }
         }
-        temp = temp->next;
-        count++;
-    }
-    temp->next = joinNode;
-}
-
-bool detectCylce(node *head)
-{
-    node *slow = head;
-    node *fast = head;
-
-    while (fast != NULL && fast->next != NULL)
-    {
-        slow = slow->next;
-        fast = fast->next->next;
-        if (slow == fast)
-        {
-            return true;
+        if(!flag){
+            return;
         }
+        ptr2=head;
+        
+        if(ptr2==ptr1){
+            while(ptr1->next!=ptr2){
+                ptr1=ptr1->next;
+            }
+        }
+        
+       else {
+           while(ptr2->next!=ptr1->next){
+            ptr2=ptr2->next;
+            ptr1=ptr1->next;
+        }
+       }
+        ptr1->next=NULL;
+        return ;
     }
-    return false;
-}
-
-void removeCycle(node *&head)
-{
-    node *slow = head;
-    node *fast = head;
-
-    do
+    void removeLoop(Node* head)
     {
-        slow = slow->next;
-        fast = fast->next->next;
-    } while (slow != fast);
-
-    fast = head;
-
-    while (fast->next != slow->next)
-    {
-        slow = slow->next;
-        fast = fast->next;
+        // code here
+        // just remove the loop without losing any nodes
+        
+        return fun(head);
     }
-    slow->next = NULL;
-}
-void printNode(node *head)
-{
-    node *temp = head;
+};
 
-    while (temp != NULL)
-    {
-        cout << temp->data << "->";
-        temp = temp->next;
-    }
-    cout << "NULL" << endl;
-}
+//{ Driver Code Starts.
 
 int main()
 {
-
-    node *head = NULL;
-
-    int data;
-    int num;
-    cin >> num;
-
-    for (int i = 1; i <= num; i++)
+    int t;
+    cin>>t;
+    while(t--)
     {
-        cin >> data;
-
-        appendNode(head, data);
+        int n, num;
+        cin>>n;
+        
+        Node *head, *tail;
+        cin>> num;
+        head = tail = new Node(num);
+        
+        for(int i=0 ; i<n-1 ; i++)
+        {
+            cin>> num;
+            tail->next = new Node(num);
+            tail = tail->next;
+        }
+        
+        int pos;
+        cin>> pos;
+        loopHere(head,tail,pos);
+        
+        Solution ob;
+        ob.removeLoop(head);
+        
+        if( isLoop(head) || length(head)!=n )
+            cout<<"0\n";
+        else
+            cout<<"1\n";
     }
-
-    printNode(head);
-
-    make_Cycle(head, 4);
-
-    cout << detectCylce(head)<<endl;;
-
-    removeCycle(head);
-    printNode(head);
+	return 0;
 }
+
+// } Driver Code Ends
