@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 int ninjaTraining(int n, vector<vector<int>> &points)
 {
     // Write your code here.
