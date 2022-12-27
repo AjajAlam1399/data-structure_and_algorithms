@@ -1,5 +1,5 @@
 # 1. Only valid for directed graph and is used to detect the negative edge cycle
-# 2. then edges can be of any order
+# 2. the edges can be of any order
 <hr></hr>
 
 # 3. for undiredted we need to create edges directed towards each other
