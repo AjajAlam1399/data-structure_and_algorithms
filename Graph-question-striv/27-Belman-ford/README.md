@@ -9,3 +9,6 @@ because - the edges will be going to present at an order so to get the distance 
 
 # How to detect negative edge cycle 
 if after n-1 iteration , if we do nth iteration and still the distance is decrasing it means that there is negative edges cycle
+
+# time complexity : O(E*V)
+# space complexity : O(V);
