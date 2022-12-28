@@ -46,4 +46,4 @@ class Solution {
         
         return dist[row-1][col-1];
     }
-}
+};
