@@ -21,3 +21,5 @@ for(int i=0;i<n;i++){
         return "negative edge cycle";
     }
 }
+
+## If there is no negative weight then we can use dijiskatra algo with the time complexiy: O(v*E*log(V)) space : O(N*N)
