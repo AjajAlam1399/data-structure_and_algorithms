@@ -1,12 +1,10 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-
-
 
 class disjointSet
 {
     vector<int> parent, rank, size;
-    int count=0;
+    int count = 0;
 
 public:
     disjointSet(int v)
@@ -25,7 +23,7 @@ public:
         {
             return parent[x];
         }
-        parent[x] = find(parent[x]);
+       return parent[x] = find(parent[x]);
     }
     void unionByRank(int x, int y)
     {
@@ -70,37 +68,42 @@ public:
     }
     int ans()
     {
-        int distgraph=0;;
-        
-        for(int i=0;i<parent.size()-1;i++){
-            if(parent[i]==i){
+        int distgraph = 0;
+        ;
+
+        for (int i = 0; i < parent.size() - 1; i++)
+        {
+            if (parent[i] == i)
+            {
                 distgraph++;
             }
         }
-        if(count>=distgraph-1){
-            return distgraph-1;
+        if (count >= distgraph - 1)
+        {
+            return distgraph - 1;
         }
-        else{
+        else
+        {
             return -1;
         }
-        
     }
 };
 
-class Solution {
-  public:
-    int Solve(int n, vector<vector<int>>& edge) {
+class Solution
+{
+public:
+    int Solve(int n, vector<vector<int>> &edge)
+    {
         // code here
         disjointSet ds(n);
-        
-        for(auto it : edge){
-            int u=it[0];
-            int v=it[1];
-            ds.unionByRank(u,v);
+
+        for (auto it : edge)
+        {
+            int u = it[0];
+            int v = it[1];
+            ds.unionByRank(u, v);
         }
-        
-        
-        
+
         return ds.ans();
     }
 };
