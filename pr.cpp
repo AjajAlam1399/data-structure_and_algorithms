@@ -1,50 +1,121 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int globalspace = 10;
 
-
-int ninjaTraining(int n, vector<vector<int>> &points)
+class node
 {
-    // Write your code here.
-    vector<vector<int>> dp(n, vector<int>(4, -1));
-    //     return fun(points,n-1,3,dp);
-
-    for (int day = 0; day < n; day++)
+public:
+    node *left;
+    node *right;
+    int data;
+    node(int data)
     {
-        for (int prev = 0; prev <= 3; prev++)
+        this->data = data;
+        left = right = NULL;
+    }
+};
+
+class BST
+{
+public:
+    node *root;
+    BST()
+    {
+        root = NULL;
+    }
+    node *insert_recursively(node *root, node *newnode)
+    {
+        if (root == NULL)
         {
-            if (day == 0)
+            root = newnode;
+            return root;
+        }
+        else if (root->data > newnode->data)
+        {
+            root->left = insert_recursively(root->left, newnode);
+        }
+        else if (root->data < newnode->data)
+        {
+            root->right = insert_recursively(root->right, newnode);
+        }
+        else
+        {
+            return root;
+        }
+        return root;
+    }
+    void display(node *root, int space)
+    {
+        if (root == NULL)
+        {
+            return;
+        }
+        space += globalspace;
+        display(root->right, space);
+        for (int i = globalspace; i < space; i++)
+        {
+            cout << " ";
+        }
+        cout << root->data << endl;
+        display(root->left, space);
+    }
+
+    vector<int> preorder(node *root)
+    {
+        vector<int> result;
+        if (root == NULL)
+        {
+            return result;
+        }
+        stack<node *> s;
+        s.push(root);
+        while (!s.empty())
+        {
+            root = s.top();
+            s.pop();
+            result.push_back(root->data);
+            if (root->right != NULL)
             {
-                int max_val = -1e7;
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i != prev)
-                    {
-                        max_val = max(max_val, points[0][i]);
-                    }
-                }
-                return max_val;
+                s.push(root->right);
             }
-            else
+            if (root->left != NULL)
             {
-                int val = -1e7;
-                for (int curr = 2; curr >= 0; curr--)
-                {
-                    if (curr != prev)
-                    {
-                        int p = points[day][curr] + dp[day - 1][curr];
-                        val = max(val, p);
-                    }
-                }
-                dp[day][prev] = val;
+                s.push(root->left);
             }
         }
+        return result;
     }
-}
+};
 
-int main()
-{
-   int num=181241162;
+void traversal(node* root,vector<int>preorder,vector<int>&inorder,vector<int>&postorder){
+    node* temp=root;
 
-   cout<<num;
+    stack<pair<node*,int>>st;
+
+    st.push({temp,0});
+
+    while(!st.empty()){
+        temp=st.top().first;
+        int l=st.top().second;
+        st.pop();
+        
+        if(l==0){
+            preorder.push_back(temp->data);
+            st.push({temp,l+1});
+            if(temp->left){
+                st.push({temp->left,0});
+            }
+        }
+        else if(l==1){
+            inorder.push_back(temp->data);
+            st.push({temp,l+1});
+            if(temp->right){
+                st.push({temp->right,0});
+            }
+        }
+        else{
+            postorder.push_back(temp->data);
+        }
+    }
 }
