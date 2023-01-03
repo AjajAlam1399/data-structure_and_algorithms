@@ -36,7 +36,7 @@ public:
         return maxarea;
     }
 
-    int maxArea(vector<vector<int>>M, int n, int m)
+    int maxArea(vector<vector<int>> M, int n, int m)
     {
         // Your code here
 
