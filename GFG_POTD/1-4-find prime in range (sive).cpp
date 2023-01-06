@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std;                       // time : n*log(n)
 vector<int> isprime(1e4, 1);
 void fun()
 {
