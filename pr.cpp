@@ -5,9 +5,8 @@ int main()
 {
     string str="ajajalam";
 
-    auto f=str.find("aja");
-    auto f1=str.find("aja",f+1);
-    if(f1!=string::npos){
-            cout<<f1<<endl;
-    }
+    
+    rotate(str.begin(),str.begin()+1,str.end());
+
+    cout<<str;
 }
