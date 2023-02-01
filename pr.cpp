@@ -3,10 +3,7 @@ using namespace std;
 
 int main()
 {
-    string str="ajajalam";
-
+    char c='m';
     
-    rotate(str.begin(),str.begin()+1,str.end());
-
-    cout<<str;
+    cout<<(int)c;
 }
