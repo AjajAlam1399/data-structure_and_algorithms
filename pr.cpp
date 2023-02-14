@@ -32,6 +32,6 @@ int main()
 {
     string str = "ABABABAB";
     string pat = "ABAB";
-    cout << fun(str, pat);
+    
 }
 
