@@ -31,7 +31,7 @@ int fun(string str, string pat)
 int main()
 {
     string str = "ABABABAB";
-    string pat = "ABAB";
+    
     
 }
 
