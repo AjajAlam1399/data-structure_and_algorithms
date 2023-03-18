@@ -71,18 +71,22 @@ public:
         }
         cout << endl;
     }
-    void heapsort(){
+    void heapsort()
+    {
         int temp[capcity];
-        for(int i=0;i<capcity;i++){
-            temp[i]=Extract_min();
-            cout<<temp[i]<<" ";
+        for (int i = 0; i < capcity; i++)
+        {
+            temp[i] = Extract_min();
+            cout << temp[i] << " ";
         }
     }
-    void getUnsortedArray(){
-        for(int i=0;i<heap_size;i++){
+    void getUnsortedArray()
+    {
+        for (int i = 0; i < heap_size; i++)
+        {
             int num;
-            cin>>num;
-            Harr[i]=num;
+            cin >> num;
+            Harr[i] = num;
         }
     }
 };
@@ -90,16 +94,16 @@ public:
 int main()
 {
     int s;
-    cin>>s;
+    cin >> s;
     MinHeap h(s);
     h.getUnsortedArray();
-    
+
     // first time hippfy
 
-    for(int i=s/2-1;i>=0;i--){
+    for (int i = s / 2 - 1; i >= 0; i--)
+    {
         h.hippyfiy(i);
     }
 
     h.heapsort();
-    
 }
