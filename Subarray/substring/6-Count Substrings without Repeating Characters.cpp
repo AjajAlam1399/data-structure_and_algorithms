@@ -31,7 +31,7 @@ int count(string str){
             flag2=true;
             j++;
             map[str[j]]--;
-            if(map[str[j]]==1){
+            if(map[str[i]]==1){
                 ans+=i-j;
                 break;
             }
