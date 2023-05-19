@@ -52,3 +52,5 @@ int lcs(string s, string t)
     reverse(ans_str.begin(), ans_str.end());
     cout << ans_str << endl;
 }
+
+vector<vector<int>>dp(101,vector<int>(101,-1));

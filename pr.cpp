@@ -30,14 +30,15 @@ int fun(string str, string pat)
 }
 int main()
 {
-       map<int,vector<int>>m;
-       m[0]={1,2,3,4,5}; 
-       m[3]={1,2,3,4}; 
-        m[1].push_back(3);
-       auto it=m[1];
+    map<int, vector<int>> m;
+    m[0] = {1, 2, 3, 4, 5};
+    m[3] = {1, 2, 3, 4};
+    m[1].push_back(3);
+    auto it = m[1];
 
-       for(auto u : it)cout<<u<<" ";
-
-       
+    for (auto u : it)
+        cout << u << " ";
 }
+
+
 
