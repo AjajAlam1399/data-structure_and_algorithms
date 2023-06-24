@@ -3,7 +3,7 @@ using namespace std;
 
 // time complexity O(log(n))
 
-int hcf(int a, int b)  // note a>b;  // eculids alogrithm
+int hcf(int a, int b) // note a>b;  // eculids alogrithm
 {
     if (b == 0)
     {

@@ -48,7 +48,7 @@ class disjoint_set{
         }
         else{
             parent[rooty]=rootx;
-            size[rootx]+=size[rootx];
+            size[rootx]+=size[rooty];
         }
     }
 };
